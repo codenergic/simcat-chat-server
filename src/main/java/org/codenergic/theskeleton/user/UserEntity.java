@@ -46,7 +46,6 @@ public class UserEntity extends AbstractAuditingEntity implements User {
 	@NotNull
 	@Column(name = "credentials_non_expired")
 	private boolean credentialsNonExpired = false;
-	@NotNull
 	@Column(length = 500, unique = true)
 	private String email;
 	@NotNull
@@ -58,7 +57,7 @@ public class UserEntity extends AbstractAuditingEntity implements User {
 	@Column
 	@Lob
 	private String password;
-	@Column(name = "phone_number")
+	@Column(name = "phone_number", unique = true)
 	private String phoneNumber;
 	@NotNull
 	@Column(unique = true)

@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost/theskeleton
+    url: jdbc:mariadb://localhost/simcat
     username: root
     password: root

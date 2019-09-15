@@ -22,7 +22,7 @@
 				<constraints nullable="false"/>
 			</column>
 			<column name="email" type="varchar(500)">
-				<constraints nullable="false" unique="true"/>
+				<constraints unique="true"/>
 			</column>
 			<column name="enabled" type="boolean">
 				<constraints nullable="false"/>
@@ -31,7 +31,9 @@
 			<column name="password" type="clob">
 				<constraints nullable="false"/>
 			</column>
-			<column name="phone_number" type="varchar(255)"/>
+			<column name="phone_number" type="varchar(255)">
+				<constraints unique="true" />
+			</column>
 			<column name="username" type="varchar(255)">
 				<constraints nullable="false" unique="true"/>
 			</column>
@@ -278,23 +280,6 @@
 			<column name="response_to_post_id" type="varchar(255)">
 				<constraints foreignKeyName="fk_post_response_to_post_id" references="ts_post(id)"/>
 			</column>
-		</createTable>
-	</changeSet>
-	<changeSet id="0004" author="diaxz">
-		<createTable tableName="ts_token_store">
-			<column name="id" type="varchar(255)">
-				<constraints primaryKey="true" nullable="false"/>
-			</column>
-			<column name="status" type="integer">
-				<constraints nullable="false"/>
-			</column>
-			<column name="user_id" type="varchar(255)">
-				<constraints nullable="false" foreignKeyName="fk_registration_user_id"
-							 references="ts_user(id)"/>
-			</column>
-			<column name="token" type="varchar(255)"/>
-			<column name="expiry_date" type="datetime"/>
-			<column name="type" type="integer"/>
 		</createTable>
 	</changeSet>
 	<changeSet id="0005" author="vickyfaizal">

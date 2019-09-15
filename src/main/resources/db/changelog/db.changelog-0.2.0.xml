@@ -1,0 +1,119 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+	<changeSet id="0010" author="dianw">
+		<createTable tableName="cat_contact">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="status" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_by_client" type="varchar(255)"/>
+			<column name="created_by" type="varchar(255)"/>
+			<column name="created_date" type="datetime"/>
+			<column name="last_modified_by_client" type="varchar(255)"/>
+			<column name="last_modified_by" type="varchar(255)"/>
+			<column name="last_modified_date" type="datetime"/>
+			<column name="user_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_contact_user_id" references="ts_user(id)"/>
+			</column>
+			<column name="contact_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_contact_contact_id" references="ts_user(id)"/>
+			</column>
+			<column name="name" type="varchar(500)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="email" type="varchar(500)"/>
+			<column name="phone_number" type="varchar(500)"/>
+		</createTable>
+
+		<createTable tableName="cat_room">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="status" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_by_client" type="varchar(255)"/>
+			<column name="created_by" type="varchar(255)"/>
+			<column name="created_date" type="datetime"/>
+			<column name="last_modified_by_client" type="varchar(255)"/>
+			<column name="last_modified_by" type="varchar(255)"/>
+			<column name="last_modified_date" type="datetime"/>
+			<column name="creator_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_room_creator_id" references="ts_user(id)"/>
+			</column>
+			<column name="picture_url" type="clob"/>
+			<column name="title" type="varchar(500)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="group" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addUniqueConstraint constraintName="uk_room_creator_id_title"
+							 tableName="cat_room" columnNames="creator_id, title"/>
+
+		<createTable tableName="cat_member">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="status" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_by_client" type="varchar(255)"/>
+			<column name="created_by" type="varchar(255)"/>
+			<column name="created_date" type="datetime"/>
+			<column name="last_modified_by_client" type="varchar(255)"/>
+			<column name="last_modified_by" type="varchar(255)"/>
+			<column name="last_modified_date" type="datetime"/>
+			<column name="room_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_member_room_id" references="cat_room(id)"/>
+			</column>
+			<column name="member_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_member_member_id" references="ts_user(id)"/>
+			</column>
+			<column name="admin" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+			<column name="moderator" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<addUniqueConstraint constraintName="uk_member_room_id_member_id"
+							 tableName="cat_member" columnNames="room_id, member_id"/>
+
+		<createTable tableName="cat_message">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="status" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_by_client" type="varchar(255)"/>
+			<column name="created_by" type="varchar(255)"/>
+			<column name="created_date" type="datetime"/>
+			<column name="last_modified_by_client" type="varchar(255)"/>
+			<column name="last_modified_by" type="varchar(255)"/>
+			<column name="last_modified_date" type="datetime"/>
+			<column name="room_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_message_room_id" references="cat_room(id)"/>
+			</column>
+			<column name="from_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_message_from_id" references="ts_user(id)"/>
+			</column>
+			<column name="reply_to_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_message_reply_to_id" references="cat_message(id)"/>
+			</column>
+			<column name="text" type="clob"/>
+			<column name="attachment_url" type="clob"/>
+			<column name="attachment_thumb_url" type="clob"/>
+			<column name="message_type" type="varchar(20)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
