@@ -86,6 +86,30 @@
 		<addUniqueConstraint constraintName="uk_member_room_id_member_id"
 							 tableName="cat_member" columnNames="room_id, member_id"/>
 
+		<createTable tableName="cat_conversation">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="status" type="integer">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created_by_client" type="varchar(255)"/>
+			<column name="created_by" type="varchar(255)"/>
+			<column name="created_date" type="datetime"/>
+			<column name="last_modified_by_client" type="varchar(255)"/>
+			<column name="last_modified_by" type="varchar(255)"/>
+			<column name="last_modified_date" type="datetime"/>
+			<column name="owner_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_conversation_owner_id" references="cat_member(id)"/>
+			</column>
+			<column name="room_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_conversation_room_id" references="cat_room(id)"/>
+			</column>
+		</createTable>
+
+		<addUniqueConstraint constraintName="uk_conversation_owner_id_room_id"
+							 tableName="cat_conversation" columnNames="owner_id, room_id"/>
+
 		<createTable tableName="cat_message">
 			<column name="id" type="varchar(255)">
 				<constraints primaryKey="true" nullable="false"/>
@@ -99,8 +123,8 @@
 			<column name="last_modified_by_client" type="varchar(255)"/>
 			<column name="last_modified_by" type="varchar(255)"/>
 			<column name="last_modified_date" type="datetime"/>
-			<column name="room_id" type="varchar(255)">
-				<constraints nullable="false" foreignKeyName="fk_message_room_id" references="cat_room(id)"/>
+			<column name="conversation_id" type="varchar(255)">
+				<constraints nullable="false" foreignKeyName="fk_message_conversation_id" references="cat_conversation(id)"/>
 			</column>
 			<column name="from_id" type="varchar(255)">
 				<constraints nullable="false" foreignKeyName="fk_message_from_id" references="ts_user(id)"/>

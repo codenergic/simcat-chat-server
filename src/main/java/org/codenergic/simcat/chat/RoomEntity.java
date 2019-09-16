@@ -1,9 +1,13 @@
 package org.codenergic.simcat.chat;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -24,6 +28,8 @@ class RoomEntity extends AbstractAuditingEntity {
 	private boolean group = false;
 	@Lob
 	private String pictureUrl;
+	@OneToMany(mappedBy = "room", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+	private Set<MemberEntity> members;
 
 	public UserEntity getCreator() {
 		return creator;
@@ -31,6 +37,15 @@ class RoomEntity extends AbstractAuditingEntity {
 
 	public RoomEntity setCreator(UserEntity creator) {
 		this.creator = creator;
+		return this;
+	}
+
+	public Set<MemberEntity> getMembers() {
+		return members;
+	}
+
+	public RoomEntity setMembers(Set<MemberEntity> members) {
+		this.members = members;
 		return this;
 	}
 

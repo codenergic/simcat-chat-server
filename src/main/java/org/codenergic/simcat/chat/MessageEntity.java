@@ -18,8 +18,8 @@ import org.codenergic.theskeleton.user.UserEntity;
 class MessageEntity extends AbstractAuditingEntity {
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "room_id")
-	private RoomEntity room;
+	@JoinColumn(name = "conversation_id")
+	private ConversationEntity conversation;
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "from_id")
@@ -58,6 +58,15 @@ class MessageEntity extends AbstractAuditingEntity {
 		return this;
 	}
 
+	public ConversationEntity getConversation() {
+		return conversation;
+	}
+
+	public MessageEntity setConversation(ConversationEntity conversation) {
+		this.conversation = conversation;
+		return this;
+	}
+
 	public UserEntity getFrom() {
 		return from;
 	}
@@ -82,15 +91,6 @@ class MessageEntity extends AbstractAuditingEntity {
 
 	public MessageEntity setReplyTo(MessageEntity replyTo) {
 		this.replyTo = replyTo;
-		return this;
-	}
-
-	public RoomEntity getRoom() {
-		return room;
-	}
-
-	public MessageEntity setRoom(RoomEntity room) {
-		this.room = room;
 		return this;
 	}
 
